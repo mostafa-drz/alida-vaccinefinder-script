@@ -4,12 +4,12 @@ if (process.env.PACKAGE_ID === undefined) {
   throw Error("Package ID can not be undefined");
 }
 const https = require("https"),
-  packageId = process.env.PACKAGE_ID;
+  PACKAGE_ID = process.env.PACKAGE_ID;
 
 // promise to retrieve the package
 const getPackage = new Promise((resolve, reject) => {
   https.get(
-    `https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/package_show?id=${packageId}`,
+    `https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/package_show?id=${PACKAGE_ID}`,
     (response) => {
       let dataChunks = [];
       response
@@ -30,7 +30,7 @@ const getPackage = new Promise((resolve, reject) => {
 getPackage
   .then((pkg) => {
     // this is the metadata of the package
-    console.log(`Received the package`, packageId);
+    console.log(`Received the package`, PACKAGE_ID);
   })
   .catch((error) => {
     console.error(error);
