@@ -1,5 +1,5 @@
 require("dotenv").config();
-
+const fs = require("fs");
 if (process.env.PACKAGE_ID === undefined) {
   throw Error("Package ID can not be undefined");
 }
@@ -69,6 +69,17 @@ getPackage
     getDatastoreResource(datastoreResources[0])
       .then((resource) => {
         // this is the actual data of the resource
+        const data = resource.map((r) => ({
+          locationName: r.locationName,
+          locationType: r.locationType,
+          address: r.address,
+          info: r.info,
+          phone: r.phone,
+          website: r.website,
+          geometry: r.geometry,
+        }));
+        fs.writeFileSync("raw.json", JSON.stringify(resource));
+        fs.writeFileSync("resource.json", JSON.stringify(data));
         //console.log(resource);
       })
       .catch((error) => {
