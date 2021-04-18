@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "populate": "node index.js"
+    "populate": "node index.js",
+    "zip": "zip -r vaccinfinder.zip ."
   },
   "keywords": [],
   "author": "",
