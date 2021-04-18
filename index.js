@@ -3,6 +3,7 @@ const fs = require("fs");
 const request = require("request");
 const https = require("https");
 const hubspot = require("@hubspot/api-client");
+const CronJob = require("node-cron");
 const { checkENVVariables } = require("./src/utils");
 checkENVVariables();
 
@@ -171,7 +172,12 @@ async function publishDraftTable() {
   }
 }
 
-exports.handler = async function (event, context) {
-  main();
-};
 main();
+
+const SCHEDULE = process.env.SCHEDULE || "0 */6 * * *";
+
+CronJob.schedule(SCHEDULE, function () {
+  console.log("-----A new Update goin to start-----");
+  main();
+  console.log("-----Update Job completed-----");
+});

@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "populate": "node index.js",
     "zip": "zip -r vaccinfinder.zip ."
   },
@@ -12,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^8.2.0"
+    "@hubspot/api-client": "^3.4.1",
+    "dotenv": "^8.2.0",
+    "node-cron": "^3.0.0"
   }
 }
