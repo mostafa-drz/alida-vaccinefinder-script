@@ -61,54 +61,56 @@ const getDatastoreResource = (resource) =>
   });
 
 // get the package information again
-getPackage
-  .then((package) => {
-    // get the datastore resources for the package
-    let datastoreResources = package["resources"].filter(
-      (r) => r.datastore_active
-    );
+function main() {
+  getPackage
+    .then((package) => {
+      // get the datastore resources for the package
+      let datastoreResources = package["resources"].filter(
+        (r) => r.datastore_active
+      );
 
-    // retrieve the first datastore resource as an example
-    getDatastoreResource(datastoreResources[0])
-      .then((resource) => {
-        // this is the actual data of the resource
-        const data = resource.map((r) => {
-          const geom = r.geometry ? JSON.parse(r.geometry) : null;
-          return {
-            values: {
-              locationname: r.locationName,
-              locationtype: r.locationType,
-              address: r.address,
-              info: r.info,
-              phone: r.phone,
-              website: r.website,
-              location: geom
-                ? {
-                    long: geom.coordinates[0],
-                    lat: geom.coordinates[1],
-                    type: "location",
-                  }
-                : null,
-            },
-          };
-        });
-        insertDataInDB(data)
-          .then(() => {
-            console.log(
-              `The data insertion is done, ${data.length} rows inserted in the table with id ${process.env.TABLE_ID}`
-            );
-          })
-          .catch((error) => {
-            console.error(error);
+      // retrieve the first datastore resource as an example
+      getDatastoreResource(datastoreResources[0])
+        .then((resource) => {
+          // this is the actual data of the resource
+          const data = resource.map((r) => {
+            const geom = r.geometry ? JSON.parse(r.geometry) : null;
+            return {
+              values: {
+                locationname: r.locationName,
+                locationtype: r.locationType,
+                address: r.address,
+                info: r.info,
+                phone: r.phone,
+                website: r.website,
+                location: geom
+                  ? {
+                      long: geom.coordinates[0],
+                      lat: geom.coordinates[1],
+                      type: "location",
+                    }
+                  : null,
+              },
+            };
           });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+          insertDataInDB(data)
+            .then(() => {
+              console.log(
+                `The data insertion is done, ${data.length} rows inserted in the table with id ${process.env.TABLE_ID}`
+              );
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
 
 async function insertDataInDB(data) {
   try {
@@ -168,3 +170,8 @@ async function publishDraftTable() {
     console.error(error);
   }
 }
+
+exports.handler = async function (event, context) {
+  main();
+};
+main();
