@@ -42,7 +42,7 @@ getPackage
 // promise to retrieve data of a datastore resource
 const getDatastoreResource = (resource) =>
   new Promise((resolve, reject) => {
-    const RESOURCE_URL = `https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/datastore_search?id=${resource["id"]}`;
+    const RESOURCE_URL = `https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/datastore_search?id=${resource["id"]}&limit=32000`;
     console.log("Resource URL", RESOURCE_URL);
     https.get(RESOURCE_URL, (response) => {
       let dataChunks = [];
