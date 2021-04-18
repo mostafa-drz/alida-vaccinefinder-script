@@ -3,7 +3,7 @@ const fs = require("fs");
 const request = require("request");
 const https = require("https");
 const hubspot = require("@hubspot/api-client");
-const { checkENVVariables } = require("./utils");
+const { checkENVVariables } = require("./src/utils");
 checkENVVariables();
 
 const hubspotClient = new hubspot.Client({ apiKey: process.env.H_API_KEY });
