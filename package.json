@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "populate": "node index.js",
-    "zip": "zip -r vaccinfinder.zip ."
+    "update": "node index.js",
+    "schedule": "node cron.js"
   },
   "keywords": [],
   "author": "",
